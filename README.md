@@ -2,12 +2,12 @@
 Home automation repo
 
 # Hardware
-Raspberry PI3+
-Raspberry Zero
-Old laptop with Ubuntu and VirtualBox. Used to host OpenHAB. Backup VMs to Amazon S3
+-Raspberry PI3+
+-Raspberry Zero
+-Old laptop with Ubuntu and VirtualBox. Used to host OpenHAB. Backup VMs to Amazon S3
 
-Power switches ???
-Xioami temperature and humidity sensors. https://www.raspberrypi.org/products/raspberry-pi-3-model-b/
+-Power switches ???
+-Xioami temperature and humidity sensors. https://www.raspberrypi.org/products/raspberry-pi-3-model-b/
 
 # RaspBerry PI
 Download Raspbian image from https://www.raspberrypi.org/downloads/raspbian/
