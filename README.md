@@ -9,7 +9,7 @@ Home automation repo
 - Xioami temperature and humidity sensors. https://www.raspberrypi.org/products/raspberry-pi-3-model-b/
 
 # RaspBerry PI
-Download Raspbian image from https://www.raspberrypi.org/downloads/raspbian/
+Use Raspberry Imager - https://www.raspberrypi.org/blog/raspberry-pi-imager-imaging-utility/
 TODO: Look at autoprovision and configuration
 Update to latest: 
 sudo apt-get update -y
