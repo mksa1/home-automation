@@ -11,4 +11,8 @@ https://www.raspberrypi.org/blog/raspberry-pi-imager-imaging-utility/
 Connect to the PI through SSH. Default username is pi and password is "raspberry"
 1. Change pi user password
 2. Install git - aptitude install git
-3. Fetch pi_boostrap code from GitHub
+3. Setup git with remote repository
+   1. git remote add origin https://github.com/mksa1981/home-automation.git
+   2. Using ssh requires setup of ssh keys. Otherwise use HTTPS with username/password login
+   3. Clone remote respoistory - git clone --bare https://github.com/mksa1981/home-automation.git
+ 
