@@ -1,8 +1,8 @@
 #!/bin/sh
 
-# Working tools
-apt-get install emacs-nox
+# Dev tools
+apt-get -y install emacs-nox
 
-# 
-apt-get install git
-apt-get install python
+# Sensor polling
+apt-get -y install python3.7
+apt-get -y install python3-pip
