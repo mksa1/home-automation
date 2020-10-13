@@ -28,12 +28,6 @@ category = "main"
 optional = false
 python-versions = "*"
 
-[package.source]
-type = "git"
-url = "https://github.com/IanHarvey/bluepy"
-reference = "v/1.3.0"
-resolved_reference = "dc33285f31a873fab92c22e8839c44899f82b041"
-
 [[package]]
 name = "btlewrap"
 version = "0.0.8"
@@ -216,7 +210,7 @@ testing = ["pytest (>=3.5,<3.7.3 || >3.7.3)", "pytest-checkdocs (>=1.2.3)", "pyt
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "45f727a92d41f970beacbf68b641758d0e217426e0505cb454d28e915c4646c7"
+content-hash = "c0db9eed89843964b345bc03fe15a70a641501f1685d8b21891a6b89d86cd701"
 
 [metadata.files]
 atomicwrites = [
@@ -227,7 +221,9 @@ attrs = [
     {file = "attrs-20.2.0-py2.py3-none-any.whl", hash = "sha256:fce7fc47dfc976152e82d53ff92fa0407700c21acd20886a13777a0d20e655dc"},
     {file = "attrs-20.2.0.tar.gz", hash = "sha256:26b54ddbbb9ee1d34d5d3668dd37d6cf74990ab23c828c2888dccdceee395594"},
 ]
-bluepy = []
+bluepy = [
+    {file = "bluepy-1.3.0.tar.gz", hash = "sha256:2a71edafe103565fb990256ff3624c1653036a837dfc90e1e32b839f83971cec"},
+]
 btlewrap = [
     {file = "btlewrap-0.0.8.tar.gz", hash = "sha256:dd7bcde02612a1ef4a3dfbe0871922618e3468674e85b4a5fcf6fc6770650572"},
 ]
