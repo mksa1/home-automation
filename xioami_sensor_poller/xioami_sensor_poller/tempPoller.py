@@ -9,6 +9,7 @@ from bluepy.btle import Scanner, DefaultDelegate
 from btlewrap import available_backends, BluepyBackend, GatttoolBackend, PygattBackend, BluetoothBackendException
 from mitemp_bt.mitemp_bt_poller import MiTempBtPoller, MI_TEMPERATURE, MI_HUMIDITY, MI_BATTERY
 import paho.mqtt.client as mqtt
+from xioami_sensor_poller.config import settings
 
 # Default values
 MI_DEVICE_NAME = "MJ_HT_V1"
@@ -27,11 +28,23 @@ def scan(timeout=BLE_SCAN_TIMEOUT):
     print('Found {} devices:'.format(len(devices)))
     return devices
 
-def main():
+# Initialize MQTT connection. Return MQTT client
+def init_mqtt_connection():
+    mqtt_server=settings.mqtt_server
+    mqtt_user=settings.mqtt_user
+    mqtt_pass=settings.mqtt_pass
+    mqtt_port=settings.mqtt_port
+    mqtt_timeout=settings.mqtt_timeout
     client = mqtt.Client()
-    client.username_pw_set("mqtt","mqtt")
-    client.connect("192.168.1.79", 1883, 60)
+    client.username_pw_set(mqtt_user,mqtt_pass)
+    client.connect(mqtt_server, mqtt_port, mqtt_timeout)
+    return client
+    
 
+def main():
+    mqtt_client = init_mqtt_connection()
+    mqtt_topic_prefix = settings.mqtt_topic_prefix
+    
     # Scan for Xiaomi temp devices
     devices = scan()
 
@@ -52,17 +65,16 @@ def main():
                 temp = poll.parameter_value(MI_TEMPERATURE)
                 humidity = poll.parameter_value(MI_HUMIDITY)
                 battery_level = poll.parameter_value(MI_BATTERY)
-                topic = MQTT_TOPIC_PREFIX + mac
+                topic = mqtt_topic_prefix + mac
                 payload = json.dumps({ 'Time': timestamp, 'Temp': temp, 'Humidity': humidity, 'Battery': battery_level})
                 print("Topic:" + topic + "-" + payload)
-                res=client.publish(topic=topic, payload=payload)
+                res=mqtt_client.publish(topic=topic, payload=payload)
                 print (str(res[0]) + "," + str(res[1]))
             sleep_time=BLE_POLLING_INTERNAL - time.time() % BLE_POLLING_INTERNAL
             print("Sleep for:" + str(sleep_time))
             time.sleep(sleep_time)
     except:
         print("Unexpected error:", sys.exc_info()[0])
-    Timer(5, greengrass_temp_poller_run).start()
 
 if __name__ == "__main__":
     main()
