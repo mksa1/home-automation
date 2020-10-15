@@ -32,8 +32,11 @@ git clone https://github.com/ChristianKuehnel/btlewrap.git btlewrap-git
 VirtualBox installation steps:
 1. Create new VirtualBox VM. 1G RAM and 50G disk 
 2. Attach Ubuntu LTS image (ex. 20.04)
+    * Download from https://releases.ubuntu.com/20.04/
 3. Complete minimal OS install (default settings)
+    * Do not select additional packages on top of the base OS. All packages will be installed using Ansible
 4. Install VirtualBox Guest Extensions
+    * WRITEME
 
 ## Bootstrap and prereqs
 
