@@ -29,6 +29,29 @@ git clone https://github.com/ratcashdev/mitemp.git
 git clone https://github.com/ChristianKuehnel/btlewrap.git btlewrap-git
 
 # OpenHAB
+VirtualBox installation steps:
+1. Create new VirtualBox VM. 1G RAM and 50G disk 
+2. Attach Ubuntu LTS image (ex. 20.04)
+3. Complete minimal OS install (default settings)
+4. Install VirtualBox Guest Extensions
+
+## Bootstrap and prereqs
+
+1. Install ansible:
+    - Ubuntu:
+        * `sudo apt-get install -y ansible`
+2. Clone this repo from the command line (in a directory of your choice):
+   ```git clone https://github.com/steintore/ansible_openhab.git```
+3. `cd ansible_openhab` into your cloned repo.
+4. From the command line run: 
+    `ansible-playbook playbook.yml -i hosts --ask-vault-pass -vvvv --ask-sudo-pass` to install OpenHAB. 
+    Note! The repository contains file(s) encrypted using `ansible-vault` - in such files there are secrets - like binding keys etc. Without the passphrase to the encrypted files you cannot start the system - in other words you need to replace the files with your own encrypted files with your secrets - or remove the functionality.
+
+
+
+My installation is based on VirtualBox, but any server will do.
 This section describes the OpenHAB setup. Also see https://www.openhab.org/
+
+
 
 
