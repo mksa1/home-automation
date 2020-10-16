@@ -1,12 +1,13 @@
 # home-automation
-Home automation repo
+This repository covers my smart home setup.
+TODO: Describe basic functionality
 
 # Hardware
-- Raspberry PI3+
-- Raspberry Zero
-- Old laptop with Ubuntu and VirtualBox. Used to host OpenHAB. Backup VMs to Amazon S3
-- Power switches ???
-- Xioami temperature and humidity sensors. https://www.raspberrypi.org/products/raspberry-pi-3-model-b/
+* Raspberry PI3+
+* Raspberry Zero
+* Old laptop with Ubuntu and VirtualBox. Used to host OpenHAB. 
+* Power switches SonOff with 
+* Xioami temperature and humidity sensors. https://www.raspberrypi.org/products/raspberry-pi-3-model-b/
 
 # RaspBerry PI
 Use Raspberry Imager - https://www.raspberrypi.org/blog/raspberry-pi-imager-imaging-utility/
@@ -22,11 +23,10 @@ sudo apt-get install python3-pip libglib2.0-dev -y
 sudo pip3 install bluepy
 
 # Xioami temperature sensors
-This section describes how to read temperatures from the sensors with Python. Will later on be run through Lambda
-To read data from the Xioami temperature sensors. 
+This section describes how to read temperatures from the sensors with Python. 
 I will use ratcashdev mitemp libary - https://github.com/ratcashdev/mitemp
-git clone https://github.com/ratcashdev/mitemp.git
-git clone https://github.com/ChristianKuehnel/btlewrap.git btlewrap-git
+Poetry is used to handle dependencies
+
 
 # OpenHAB
 VirtualBox installation steps:
