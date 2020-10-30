@@ -1,0 +1,28 @@
+---
+
+timezone: "Europe/Copenhagen"
+locale: "da_DK.UTF-8"
+
+apt_config:
+  update_cache: yes
+  cache_valid_time: 7200
+
+ntp:
+    - "pool.ntp.org"
+    
+letsencrypt_email: andersen.mikael@gmail.com
+
+#graphite_server: 'grafana.dynv6.net'
+graphite_server: "127.0.0.1"
+
+nginx_user: "{{ vault_nginx_user }}"
+nginx_password: "{{ vault_nginx_password }}"
+
+dynv6_name: "mksa1.dynv6.net"
+dynv6_zone_id "3104674" 
+#dynv6_name: "raspi4.dynv6.net"
+dynv6_device: "{{ vault_dynv6_device }}"
+dynv6_token: "{{ vault_dynv6_token }}"
+
+fqdn: "mksa1.dynv6.net"
+#fqdn: "raspi4.dynv6.net"

@@ -1,0 +1,29 @@
+---
+
+- name: ensure packages are installed
+  apt: 
+    pkg:
+    - certbot
+#    - python-certbot-nginx
+    - python3-certbot-nginx
+    update_cache: "{{apt_config.update_cache}}"
+    cache_valid_time: "{{apt_config.cache_valid_time}}"
+
+- name: Install certbot-external-auth package
+  pip:
+    name: certbot-external-auth
+
+
+- name: get certificate
+  shell: 'certbot -n run --nginx --agree-tos --email {{letsencrypt_email}} -d {{fqdn}}'
+
+
+# - name: cron job
+#   cron:
+#     name: "get new certificate"
+#     minute: "0"
+#     hour: "5"
+#     day: "11"
+#     job: 'certbot -n certonly --nginx --agree-tos --email {{letsencrypt_email}} -d {{fqdn}}'
+#     cron_file: letsencrypt
+#     user: root

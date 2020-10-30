@@ -1,0 +1,20 @@
+---
+
+- name: install openhab packages
+  apt: 
+    pkg:
+    - zulu-8 # java 8
+    - openhab2
+    - openhab2-addons
+    - openhab2-addons-legacy
+    - sysstat
+    - python3-pip
+    - nginx
+#    - python-pip # jython only supports 2.7
+    - virtualenv
+    - python3-passlib
+    - python3-certbot-nginx
+    update_cache: "{{apt_config.update_cache}}"
+    cache_valid_time: "{{apt_config.cache_valid_time}}"
+
+

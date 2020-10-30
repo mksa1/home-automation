@@ -1,0 +1,25 @@
+---
+
+- name: install dynv6 update script
+  template:
+     src: dynv6.sh.j2
+     dest: "/root/dynv6.sh"
+     owner: root
+     group: root
+     mode: "u=rwx,g=r,o=r"
+
+- name: install dynv6 handler script ACME
+  template:
+     src: dynv6_handler.sh.j2
+     dest: "/root/dynv6_handler.sh"
+     owner: root
+     group: root
+     mode: "u=rwx,g=r,o=r"
+
+- name: Cron file for dynv6
+  cron:
+    name: dynv6 update
+    user: root
+    job: "/root/dynv6.sh"
+    cron_file: dynv6
+
