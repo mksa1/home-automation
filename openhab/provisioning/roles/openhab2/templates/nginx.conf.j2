@@ -7,8 +7,8 @@ server {
     listen                          [::]:443 ipv6only=off ssl;
     server_name                     {{fqdn}};
 
-    ssl_certificate                 /etc/letsencrypt/live/schnidrig.dynv6.net/fullchain.pem;
-    ssl_certificate_key             /etc/letsencrypt/live/schnidrig.dynv6.net/privkey.pem;
+    ssl_certificate                 /etc/letsencrypt/live/mksa1.dynv6.net/fullchain.pem;
+    ssl_certificate_key             /etc/letsencrypt/live/mksa1.dynv6.net/privkey.pem;
     ssl_protocols                   TLSv1 TLSv1.1 TLSv1.2;
     ssl_ciphers                     EECDH+AESGCM:EDH+AESGCM:EECDH:EDH:!MD5:!RC4:!LOW:!MEDIUM:!CAMELLIA:!ECDSA:!DES:!DSS:!3DES:!NULL;
     ssl_prefer_server_ciphers on;

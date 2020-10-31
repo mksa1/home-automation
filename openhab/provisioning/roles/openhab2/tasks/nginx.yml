@@ -9,7 +9,7 @@
      mode: "u=rwx,g=r,o=r"
   notify: restart nginx
 
-- stat: path=/etc/letsencrypt/live/schnidrig.dynv6.net/fullchain.pem
+- stat: path=/etc/letsencrypt/live/mksa1.dynv6.net/fullchain.pem
   register: letsencrypt_cert
   
 - name: overwrite nginx config for letsencrypt initialization
@@ -50,10 +50,10 @@
     dest: /etc/nginx/ssl
     state: directory
 
-- name: create self singed certificate
-  command: 'openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt -subj "/C=CH/ST=AG/L=Niederlenz/O=none/OU=none/CN=schnidrig.dynv6.net"'
-  args: 
-    creates: "/etc/nginx/ssl/nginx.crt"
+#- name: create self singed certificate
+#  command: 'openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt -subj "/C=CH/ST=AG/L=Niederlenz/O=none/OU=none/CN=schnidrig.dynv6.net"'
+#  args: 
+#    creates: "/etc/nginx/ssl/nginx.crt"
 
 - name: gen dhparam
   command: 'openssl dhparam -outform PEM -out /etc/nginx/ssl/dhparam2048.pem 2048'

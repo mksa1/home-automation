@@ -9,6 +9,7 @@
     - openhab2-addons-legacy
     - sysstat
     - python3-pip
+    - jq
     - nginx
 #    - python-pip # jython only supports 2.7
     - virtualenv

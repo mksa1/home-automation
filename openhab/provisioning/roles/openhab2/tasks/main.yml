@@ -25,10 +25,6 @@
   tags:
   - backup
   - openhab2
-- include: nginx.yml
-  tags:
-  - nginx
-  - openhab2
 - include: dynv6.yml
   tags:
   - dynv6
@@ -36,6 +32,10 @@
 - include: letsencrypt.yml
   tags:
   - letsencrypt
+  - openhab2
+- include: nginx.yml
+  tags:
+  - nginx
   - openhab2
 - include: scripts.yml
   tags:

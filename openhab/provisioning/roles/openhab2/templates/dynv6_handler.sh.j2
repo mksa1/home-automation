@@ -27,12 +27,12 @@ case "$cmd" in
         echo "port: ${port}" 1>&2
         echo "json: ${cbot_json}" 1>&2
         # the json below is from dynu's API you will need to change accordingly
-        curl -X POST https://dynv6.com/api/v2/zones/{{dynv6_zone_id}}/records -H "accept: application/json" -H "Authorization: Bearer {{dynv6_token}}" -H "Content-Type: application/json" -d "{\"name\":\"_acme-challenge\",\"priority\":0,\"port\":0,\"weight\":0,\"flags\":0,\"tag\":\"issue\",\"data\":\"${validation}\","type\":\"TXT\"}"
+        curl -X POST https://dynv6.com/api/v2/zones/{{dynv6_zone_id}}/records -H "accept: application/json" -H "Authorization: Bearer {{dynv6_token}}" -H "Content-Type: application/json" -d "{\"name\":\"_acme-challenge\",\"priority\":0,\"port\":0,\"weight\":0,\"flags\":0,\"tag\":\"issue\",\"data\":\"${validation}\",\"type\":\"TXT\"}"
 
         # wait for the record to actually show up (the builtin time out is WAY too sort)
         while true
         do
-            recordset=$(dig _acme-challenge.<DOMAIN> TXT +short | tr -d "\"")
+            recordset=$(dig _acme-challenge.{{dynv6_name}} TXT +short | tr -d "\"")
             if [[ $recordset == ${validation} ]]
             then
                 sleep 10s
@@ -62,7 +62,7 @@ case "$cmd" in
         echo "json: ${cbot_json}" 1>&2
         recordset=$(curl -s -X GET https://dynv6.com/api/v2/zones/{{dynv6_zone_id}}/records -H "accept: application/json" -H "Authorization: Bearer {{dynv6_token}}" -H "Content-Type: application/json")
         temp=$(echo "$recordset" | jq .[0].id)
-        curl -s -X DELETE https://dynv6.com/api/v2/zones/{{ dynv6_zone }}/records/ -H "accept: application/json" -H "Authorization: Bearer {{dynv6_token}}""
+        curl -s -X DELETE https://dynv6.com/api/v2/zones/{{ dynv6_zone_id }}/records/ -H "accept: application/json" -H "Authorization: Bearer {{dynv6_token}}"
         echo "-----END CLEANUP-----" 1>&2
         ;;
     post-cleanup)

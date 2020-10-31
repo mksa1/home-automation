@@ -11,7 +11,7 @@
 - name: install dynv6 handler script ACME
   template:
      src: dynv6_handler.sh.j2
-     dest: "/root/dynv6_handler.sh"
+     dest: "/home/vagrant/dynv6_handler.sh"
      owner: root
      group: root
      mode: "u=rwx,g=r,o=r"
