@@ -41,20 +41,8 @@ def init_mqtt_connection():
     return client
     
 
-def main():
-    mqtt_client = init_mqtt_connection()
+def fetch_sensor_data_loop(pollers,mqtt_client):
     mqtt_topic_prefix = settings.mqtt_topic_prefix
-    
-    # Scan for Xiaomi temp devices
-    devices = scan()
-
-    # Tuple consisting of (device_mac, poller)
-    pollers = []
-    # Create poller for each device
-    for device in devices:
-        poller = MiTempBtPoller(device[0], BluepyBackend, 20.0)
-        pollers.append((device[0],poller))
-
     # Continually loop through pollers and submit data every BLE_POLLING_INTERVAL seconds
     try:
         while True:
@@ -75,6 +63,25 @@ def main():
             time.sleep(sleep_time)
     except:
         print("Unexpected error:", sys.exc_info()[0])
+
+
+def main():
+    #Setup MQTT connection
+    mqtt_client = init_mqtt_connection()
+
+    
+    # Scan for Xiaomi temp devices
+    devices = scan()
+
+    # Tuple consisting of (device_mac, poller)
+    pollers = []
+    # Create poller for each device
+    for device in devices:
+        poller = MiTempBtPoller(device[0], BluepyBackend, 20.0)
+        pollers.append((device[0],poller))
+
+    # Continually loop through pollers and submit data every BLE_POLLING_INTERVAL seconds
+    fetch_sensor_data_loop(pollers, mqtt_client)
 
 if __name__ == "__main__":
     main()
