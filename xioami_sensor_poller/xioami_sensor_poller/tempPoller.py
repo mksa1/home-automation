@@ -13,7 +13,7 @@ from xioami_sensor_poller.config import settings
 
 # Default values
 MI_DEVICE_NAME = "MJ_HT_V1"
-BLE_SCAN_TIMEOUT = 10.0
+BLE_SCAN_TIMEOUT = 60.0
 BLE_POLLING_INTERNAL = 60
 DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
 MQTT_TOPIC_PREFIX = "home/xioami_sensor/"

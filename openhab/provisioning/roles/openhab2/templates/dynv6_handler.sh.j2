@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+# Note: keep stdout clean, as it may be used to pass data back in the future,
+# and it is used to signal NotImplemented.
+# Inspiration taken from: https://github.com/marcan/letsencrypt-external
+
+set -e
+cmd="$1"
+shift
+
+case "$cmd" in
+    pre-perform)
+        echo "-----BEGIN PRE-PERFORM-----" 1>&2
+        echo "-----END PRE-PERFORM-----" 1>&2
+        ;;
+    perform)
+        echo "-----BEGIN PERFORM-----" 1>&2
+        echo "cmd: ${cmd}" 1>&2
+        echo "type: ${type}" 1>&2
+        echo "domain: ${domain}" 1>&2
+        echo "uri: ${uri}" 1>&2
+        echo "validation: ${validation}" 1>&2
+        echo "key-auth: ${key_auth}" 1>&2
+        echo "z_domain: ${z_domain}" 1>&2
+        echo "cert_path: ${cert_path}" 1>&2
+        echo "key_path: ${key_path}" 1>&2
+        echo "port: ${port}" 1>&2
+        echo "json: ${cbot_json}" 1>&2
+        # the json below is from dynu's API you will need to change accordingly
+        curl -X POST https://dynv6.com/api/v2/zones/{{dynv6_zone_id}}/records -H "accept: application/json" -H "Authorization: Bearer {{dynv6_token}}" -H "Content-Type: application/json" -d "{\"name\":\"_acme-challenge\",\"priority\":0,\"port\":0,\"weight\":0,\"flags\":0,\"tag\":\"issue\",\"data\":\"${validation}\",\"type\":\"TXT\"}"
+
+        # wait for the record to actually show up (the builtin time out is WAY too sort)
+        while true
+        do
+            recordset=$(dig _acme-challenge.{{dynv6_name}} TXT +short | tr -d "\"")
+            if [[ $recordset == ${validation} ]]
+            then
+                sleep 10s
+                break
+            else
+                sleep 1m
+            fi
+        done
+        echo "-----END PERFORM-----" 1>&2
+        ;;
+    post-perform)
+        echo "-----BEGIN POST-PERFORM-----" 1>&2
+        echo "-----END POST-PERFORM-----" 1>&2
+        ;;
+    pre-cleanup)
+        echo "-----BEGIN PRE-CLEANUP-----" 1>&2
+        echo "-----END PRE-CLEANUP-----" 1>&2
+        ;;
+    cleanup)
+        echo "-----BEGIN CLEANUP-----" 1>&2
+        echo "cmd: ${cmd}" 1>&2
+        echo "type: ${type}" 1>&2
+        echo "domain: ${domain}" 1>&2
+        echo "status: ${status}" 1>&2
+        echo "token: ${token}" 1>&2
+        echo "error: ${error}" 1>&2
+        echo "json: ${cbot_json}" 1>&2
+        recordset=$(curl -s -X GET https://dynv6.com/api/v2/zones/{{dynv6_zone_id}}/records -H "accept: application/json" -H "Authorization: Bearer {{dynv6_token}}" -H "Content-Type: application/json")
+        temp=$(echo "$recordset" | jq .[0].id)
+        curl -s -X DELETE https://dynv6.com/api/v2/zones/{{ dynv6_zone_id }}/records/ -H "accept: application/json" -H "Authorization: Bearer {{dynv6_token}}"
+        echo "-----END CLEANUP-----" 1>&2
+        ;;
+    post-cleanup)
+        echo "-----BEGIN POST-CLEANUP-----" 1>&2
+        echo "-----END POST-CLEANUP-----" 1>&2
+        ;;
+    *)
+        # Signalizing the given command is not implemented
+        echo "NotImplemented"
+        exit 1
+        ;;
+esac

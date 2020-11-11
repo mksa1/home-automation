@@ -1,0 +1,16 @@
+---
+
+- name: create scripts dir
+  file: 
+    dest: /root/bin
+    state: directory
+
+- name: create scripts
+  template:
+     src: "{{ item }}"
+     dest: "/root/bin/{{ item }}"
+     owner: root
+     group: root
+     mode: "u=rwx,g=r,o=r"
+  loop:
+    - karaf.sh

@@ -1,0 +1,9 @@
+---
+
+ - name: Install mosquitto
+   apt: name=mosquitto update_cache=yes
+   become: yes
+   
+ - name: Install mosquitto client
+   apt: name=mosquitto-clients update_cache=yes
+   become: yes

@@ -1,0 +1,11 @@
+---
+
+- hosts: all
+  become: true
+  gather_facts: no
+  roles:
+#    - raspberry
+    - mqttwarn
+    - openhab2
+
+
