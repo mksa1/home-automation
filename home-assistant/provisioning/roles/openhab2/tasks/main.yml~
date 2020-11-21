@@ -13,10 +13,10 @@
   - openhab
   - openhab2
 #- include: habmin.yml
-#- include: nfs.yml
-#  tags:
-#  - nfs
-#  - openhab2
+- include: nfs.yml
+  tags:
+  - nfs
+  - openhab2
 - include: mysql.yml
   tags:
   - mysql
@@ -24,6 +24,10 @@
 - include: backup.yml
   tags:
   - backup
+  - openhab2
+- include: nginx.yml
+  tags:
+  - nginx
   - openhab2
 - include: dynv6.yml
   tags:
@@ -33,14 +37,14 @@
   tags:
   - letsencrypt
   - openhab2
-- include: nginx.yml
-  tags:
-  - nginx
-  - openhab2
 - include: scripts.yml
   tags:
   - scripts
   - openhab2
+#- include: gardena.yml
+# tags:
+#  - gardena
+#  - openhab2
 
 
 

@@ -8,10 +8,8 @@
     - openhab2-addons
     - openhab2-addons-legacy
     - sysstat
-    - python3-pip
-    - jq
+    - python-pip3
     - nginx
-    - acl
 #    - python-pip # jython only supports 2.7
     - virtualenv
     - python3-passlib

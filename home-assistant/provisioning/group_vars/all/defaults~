@@ -19,13 +19,9 @@ nginx_user: "{{ vault_nginx_user }}"
 nginx_password: "{{ vault_nginx_password }}"
 
 dynv6_name: "mksa1.dynv6.net"
-dynv6_zone_id: "3104674" 
 #dynv6_name: "raspi4.dynv6.net"
 dynv6_device: "{{ vault_dynv6_device }}"
 dynv6_token: "{{ vault_dynv6_token }}"
 
 fqdn: "mksa1.dynv6.net"
-
-openhab_data: "/etc/openhab2"
-openhab_conf_repo_dest: "/opt/openhab2"
-openhab_conf_repo: "https://github.com/mksa1981/openhab_config.git"
+#fqdn: "raspi4.dynv6.net"
