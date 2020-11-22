@@ -1,0 +1,12 @@
+# This file is a helper for the deployment of Home Assistant if not the role
+# is used.
+---
+- hosts: home-assistant
+  become: true
+  vars:
+    ha_user: ha
+    ha_port: 8123
+    ha_conf_dir: /opt/home-assistant
+
+  tasks:
+  - include: tasks/main.yml

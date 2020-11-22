@@ -1,0 +1,9 @@
+---
+- include: preparation.yml
+- include: installation.yml
+- include: systemd.yml
+- include: firewall.yml
+  when: ansible_distribution == "Fedora"
+- include: dynv6.yml
+- include: letsencrypt.yml
+- include: nginx.yml

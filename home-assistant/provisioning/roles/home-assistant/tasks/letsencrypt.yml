@@ -1,0 +1,48 @@
+---
+
+- name: ensure packages are installed
+  apt: 
+    pkg:
+    - certbot
+    - python3-certbot-nginx
+    update_cache: "{{apt_config.update_cache}}"
+    cache_valid_time: "{{apt_config.cache_valid_time}}"
+
+- name: Install certbot-external-auth package
+  pip:
+    name: certbot-external-auth
+
+# Does the certificate already exist?
+- name: certbot | does cert already exist
+  stat:
+    path: "/etc/letsencrypt/live/{{dynv6_name}}//cert.pem"
+  register: certbot_certificate
+
+# Get the expiration date for the certificate in ISO format.
+- name: certbot | get cert expiration date
+  shell: "date --date=\"$(openssl x509 -in /etc/letsencrypt/live/{{dynv6_name}}/cert.pem -noout -enddate | cut -d= -f 2)\" --iso-8601"
+  register: certbot_expiration_date
+  changed_when: False
+  when: certbot_certificate.stat.exists == True
+
+# Convert the expiration date into the number of seconds from today.
+- name: certbot | calculating expiration in seconds
+  shell: "echo $(($(date --date={{certbot_expiration_date.stdout}} +%s) - $(date +%s)))"
+  register: certbot_expires_in
+  changed_when: False
+  when: certbot_certificate.stat.exists == True
+
+- name: certbot | get certificate
+# shell: 'certbot -n run --nginx --agree-tos --email {{letsencrypt_email}} -d {{fqdn}}'
+  shell: 'certbot --staging --text --agree-tos --email {{letsencrypt_email}} --expand --renew-by-default --configurator certbot-external-auth:out --certbot-external-auth:out-public-ip-logging-ok -d {{dynv6_name}} --preferred-challenges dns --certbot-external-auth:out-handler /root/dynv6_handler.sh certonly'
+  when: certbot_certificate.stat.exists == False or (certbot_certificate.stat.exists == True and certbot_expires_in.stdout|int < 2592000) # 30 days in seconds
+
+- name: cron job
+  cron:
+    name: "get new certificate"
+    minute: "0"
+    hour: "5"
+    day: "11"
+    job: 'certbot --staging --text --agree-tos --email {{letsencrypt_email}} --expand --renew-by-default --configurator certbot-external-auth:out --certbot-external-auth:out-public-ip-logging-ok -d {{dynv6_name}} --preferred-challenges dns --certbot-external-auth:out-handler /root/dynv6_handler.sh renew'
+    cron_file: letsencrypt
+    user: root

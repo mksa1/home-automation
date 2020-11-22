@@ -1,0 +1,11 @@
+# This file is part of the Home Assistant role.
+---
+- name: restart home-assistant
+  service:
+    name: home-assistant
+    state: restarted
+
+- name: restart nginx
+  service: 
+    name: nginx 
+    state: restarted

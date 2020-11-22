@@ -1,0 +1,72 @@
+---
+- name: ensure packages are installed
+  apt: 
+    pkg:
+    - nginx
+    - python3-certbot-nginx
+    update_cache: "{{apt_config.update_cache}}"
+    cache_valid_time: "{{apt_config.cache_valid_time}}"
+
+
+- name: create nginx config
+  template:
+     src: nginx.conf.j2
+     dest: "/etc/nginx/sites-available/homeassistant.conf"
+     owner: root
+     group: root
+     mode: "u=rwx,g=r,o=r"
+  notify: restart nginx
+
+- stat: path=/etc/letsencrypt/live/mksa1.dynv6.net/fullchain.pem
+  register: letsencrypt_cert
+  
+- name: overwrite nginx config for letsencrypt initialization
+  template:
+     src: nginx.init.conf.j2
+     dest: "/etc/nginx/sites-available/homeassistant.conf"
+     owner: root
+     group: root
+     mode: "u=rwx,g=r,o=r"
+  notify: restart nginx
+  when: letsencrypt_cert.stat.exists == false
+
+- name: create nginx passwd file
+  htpasswd:
+     name: "{{nginx_user}}"
+     password: "{{nginx_password}}"
+     path: "/etc/nginx/htpasswd"
+     owner: root
+     group: root
+     mode: "u=rw"
+  notify: restart nginx
+
+- name: remove default site
+  file: 
+    dest: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: restart nginx
+
+- name: enable openhab site
+  file: 
+    src: /etc/nginx/sites-available/homeassistant.conf
+    dest: /etc/nginx/sites-enabled/homeassistant.conf
+    state: link
+  notify: restart nginx
+
+- name: ssl dir
+  file: 
+    dest: /etc/nginx/ssl
+    state: directory
+
+#- name: create self singed certificate
+#  command: 'openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt -subj "/C=CH/ST=AG/L=Niederlenz/O=none/OU=none/CN=schnidrig.dynv6.net"'
+#  args: 
+#    creates: "/etc/nginx/ssl/nginx.crt"
+
+- name: gen dhparam
+  command: 'openssl dhparam -outform PEM -out /etc/nginx/ssl/dhparam2048.pem 2048'
+  args: 
+    creates: "/etc/nginx/ssl/dhparam2048.pem"
+  notify: restart nginx
+
+
