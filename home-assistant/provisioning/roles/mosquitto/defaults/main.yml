@@ -17,7 +17,9 @@ mosquitto_add_groups: []
 
 mosquitto_config_file: /etc/mosquitto/mosquitto.conf
 
-mosquitto_config: {}
+mosquitto_config:
+  - password_file: /etc/mosquitto/passwordfile.pwd
+  - acl_file: /etc/mosquitto/aclfile
 
 mosquitto_listeners: {}
 
@@ -25,6 +27,22 @@ mosquitto_bridges: {}
 
 mosquitto_auth_anonymous: []
 
-mosquitto_auth_users: []
+mosquitto_auth_users:
+  - name: "{{ mqtt_ha_user }}"
+    state: present
+    password: "{{ mqtt_ha_password }}"
+    acl:
+      - "topic readwrite #"
+  - name: "{{ mqtt_pi_user }}"
+    state: present
+    password: "{{ mqtt_pi_password }}"
+    acl:
+      - "topic readwrite #"
+  - name: "{{ mqtt_sonoff_user }}"
+    state: present
+    password: "{{ mqtt_sonoff_password }}"
+    acl:
+      - "topic readwrite #"
+  
 
 mosquitto_auth_patterns: []

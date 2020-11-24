@@ -18,6 +18,17 @@ graphite_server: "127.0.0.1"
 nginx_user: "{{ vault_nginx_user }}"
 nginx_password: "{{ vault_nginx_password }}"
 
+mqtt_ha_user: "{{ vault_mqtt_ha_user }}"
+mqtt_ha_password: "{{ vault_mqtt_ha_password }}"
+
+mqtt_pi_user: "{{ vault_mqtt_pi_user }}"
+mqtt_pi_password: "{{ vault_mqtt_pi_password }}"
+
+mqtt_sonoff_user: "{{ vault_mqtt_sonoff_user }}"
+mqtt_sonoff_password: "{{ vault_mqtt_sonoff_password }}"
+
+
+
 dynv6_name: "mksa1.dynv6.net"
 dynv6_zone_id: "3104674" 
 #dynv6_name: "raspi4.dynv6.net"

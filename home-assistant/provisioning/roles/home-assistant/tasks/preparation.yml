@@ -1,4 +1,10 @@
 ---
+- name: update package cache for Debian and Ubuntu
+  apt:
+     update_cache: "{{apt_config.update_cache}}"
+     cache_valid_time: "{{apt_config.cache_valid_time}}"
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
 - name: install commonly-named packages
   package:
     name: "{{ item }}"
@@ -9,7 +15,7 @@
   - gcc
   - sysstat
   - python3-passlib
-
+ 
 - name: install fedora-specific packages
   package:
     name: "{{ item }}"
@@ -32,7 +38,7 @@
   with_items:
     - python3-dev
     - python3-passlib
-  when: ansible_distribution == "Debian"
+  when: ansible_distribution == "Debian" or ansible_distribution == 'Ubuntu'
 
 - name: install debian-required pip packages
   pip:
@@ -42,7 +48,7 @@
   with_items:
     - appdirs
     - packaging
-  when: ansible_distribution == "Debian"
+  when: ansible_distribution == "Debian" or ansible_distribution == 'Ubuntu'
 
 - name: create user
   user:

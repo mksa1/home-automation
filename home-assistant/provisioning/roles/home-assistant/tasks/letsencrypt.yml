@@ -43,6 +43,6 @@
     minute: "0"
     hour: "5"
     day: "11"
-    job: 'certbot --staging --text --agree-tos --email {{letsencrypt_email}} --expand --renew-by-default --configurator certbot-external-auth:out --certbot-external-auth:out-public-ip-logging-ok -d {{dynv6_name}} --preferred-challenges dns --certbot-external-auth:out-handler /root/dynv6_handler.sh renew'
+    job: 'certbot --text --agree-tos --email {{letsencrypt_email}} --expand --renew-by-default --configurator certbot-external-auth:out --certbot-external-auth:out-public-ip-logging-ok -d {{dynv6_name}} --preferred-challenges dns --certbot-external-auth:out-handler /root/dynv6_handler.sh renew'
     cron_file: letsencrypt
     user: root

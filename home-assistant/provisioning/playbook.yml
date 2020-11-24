@@ -6,7 +6,8 @@
   roles:
 #    - mqttwarn
 #    - openhab2
-    - mosquitto
     - home-assistant
+    - mosquitto
+
 
 
