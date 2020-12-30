@@ -4,6 +4,7 @@
 ha_conf_dir: /opt/home-assistant
 # The default user
 ha_user: ha
+ha_user_uid: 997
 # The default port
 ha_port: 8123
 # modify motd

@@ -34,7 +34,7 @@
 
 - name: certbot | get certificate
 # shell: 'certbot -n run --nginx --agree-tos --email {{letsencrypt_email}} -d {{fqdn}}'
-  shell: 'certbot --staging --text --agree-tos --email {{letsencrypt_email}} --expand --renew-by-default --configurator certbot-external-auth:out --certbot-external-auth:out-public-ip-logging-ok -d {{dynv6_name}} --preferred-challenges dns --certbot-external-auth:out-handler /root/dynv6_handler.sh certonly'
+  shell: 'certbot {{letsencrypt_env}} --text --agree-tos --email {{letsencrypt_email}} --expand --renew-by-default --configurator certbot-external-auth:out --certbot-external-auth:out-public-ip-logging-ok -d {{dynv6_name}} --preferred-challenges dns --certbot-external-auth:out-handler /root/dynv6_handler.sh certonly'
   when: certbot_certificate.stat.exists == False or (certbot_certificate.stat.exists == True and certbot_expires_in.stdout|int < 2592000) # 30 days in seconds
 
 - name: cron job
@@ -43,6 +43,6 @@
     minute: "0"
     hour: "5"
     day: "11"
-    job: 'certbot --text --agree-tos --email {{letsencrypt_email}} --expand --renew-by-default --configurator certbot-external-auth:out --certbot-external-auth:out-public-ip-logging-ok -d {{dynv6_name}} --preferred-challenges dns --certbot-external-auth:out-handler /root/dynv6_handler.sh renew'
+    job: 'certbot {{letsencrypt_env}} --text --agree-tos --email {{letsencrypt_email}} --expand --renew-by-default --configurator certbot-external-auth:out --certbot-external-auth:out-public-ip-logging-ok -d {{dynv6_name}} --preferred-challenges dns --certbot-external-auth:out-handler /root/dynv6_handler.sh renew'
     cron_file: letsencrypt
     user: root

@@ -15,6 +15,7 @@
   - gcc
   - sysstat
   - python3-passlib
+  - jq
  
 - name: install fedora-specific packages
   package:
@@ -54,6 +55,7 @@
   user:
     name: "{{ ha_user }}"
     comment: "Home Assistant"
+    uid: 997
     createhome: no
     system: yes
     shell: "/sbin/nologin"
