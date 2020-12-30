@@ -11,6 +11,8 @@ ntp:
     - "pool.ntp.org"
     
 letsencrypt_email: andersen.mikael@gmail.com
+# Leave empty for LetsEncrypt Live environment. Otherwise --staging
+letsencrypt_env:
 
 #graphite_server: 'grafana.dynv6.net'
 graphite_server: "127.0.0.1"
