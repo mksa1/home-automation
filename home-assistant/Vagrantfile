@@ -5,9 +5,10 @@ Vagrant.configure(2) do |config|
 
   config.vm.box = "bento/ubuntu-20.04"
 
+
   config.ssh.forward_x11 = true
   config.ssh.forward_agent = true
-
+  
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", "1024"]
     vb.customize ["modifyvm", :id, "--usb", "on"]
@@ -17,6 +18,9 @@ Vagrant.configure(2) do |config|
 #  config.vm.network "forwarded_port", guest: 8123, host: 8080, auto_correct: true
   config.vm.network "forwarded_port", guest: 443, host: 8443, auto_correct: true
   config.vm.network "forwarded_port", guest: 1883, host: 1883, auto_correct: true
+
+  # Synchronize /opt/home-assistant. UID used since user will be provisioned by Ansible
+  config.vm.synced_folder "~/home-assistant-config", "/opt/home-assistant", owner: "997", group: "997"
 
   # http://fgrehm.viewdocs.io/vagrant-cachier
   if Vagrant.has_plugin?("vagrant-cachier")
